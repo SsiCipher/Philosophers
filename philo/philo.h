@@ -9,10 +9,18 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define TAKEN_FORK 0
+# define EATING 1
+# define SLEEPING 2
+# define THINKING 3
+# define DIED 4
+
 typedef struct s_philo
 {
 	unsigned int	id;
-	int				n_times_to_eaten;
+	int				n_times_eaten;
+	int				last_time_eaten;
+	pthread_t		thread;
 }	t_philo;
 
 typedef struct s_data
@@ -24,6 +32,8 @@ typedef struct s_data
 	int				n_times_to_eat;
 	unsigned long	start_time;
 	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	write_mutex;
 }	t_data;
 
 #endif
