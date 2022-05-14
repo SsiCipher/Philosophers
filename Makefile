@@ -3,7 +3,7 @@ COMP	= cc
 FLAGS	= -Wall -Wextra -Werror
 INCS	= -I .
 LIBS	= -lpthread
-SRCS	= src/utils.c main.c
+SRCS	= src/utils.c src/init_data.c src/routine.c main.c
 
 all: $(NAME)
 
