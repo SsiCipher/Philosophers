@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/05/13 13:03:25 by yanab            ###   ########.fr       */
+/*   Updated: 2022/05/23 15:10:02 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int init_mutexes(t_data *data)
+int	init_mutexes(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->philos_count);
@@ -26,9 +26,9 @@ int init_mutexes(t_data *data)
 	return (1);
 }
 
-int init_philos(t_data *data)
+int	init_philos(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philos_count);
@@ -44,12 +44,18 @@ int init_philos(t_data *data)
 	return (1);
 }
 
-int check_error(t_data data, int check_last_arg)
+int	check_error(t_data data, int check_last_arg)
 {
-	return (data.philos_count == -1 || data.time_to_die == -1 || data.time_to_eat == -1 || data.time_to_sleep == -1 || (check_last_arg && data.n_times_to_eat == -1));
+	return (
+		data.philos_count == -1
+		|| data.time_to_die == -1
+		|| data.time_to_eat == -1
+		|| data.time_to_sleep == -1
+		|| (check_last_arg && data.n_times_to_eat == -1)
+	);
 }
 
-int init_data(t_data *data, int argc, char **argv)
+int	init_data(t_data *data, int argc, char **argv)
 {
 	data->philos_count = atoi_check(argv[0]);
 	data->time_to_die = atoi_check(argv[1]);

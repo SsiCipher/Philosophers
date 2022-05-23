@@ -1,14 +1,14 @@
-NAME	= philo
 COMP	= cc
+NAME	= philo
 FLAGS	= -Wall -Wextra -Werror
+SRCS	= src/utils.c src/init_data.c src/routine.c
 INCS	= -I .
 LIBS	= -lpthread
-SRCS	= src/utils.c src/init_data.c src/routine.c main.c
 
 all: $(NAME)
 
-$(NAME):
-	$(COMP) $(FLAGS) $(INCS) $(SRCS) $(LIBS) -o $(NAME)
+$(NAME): $(SRCS) main.c
+	$(COMP) $(FLAGS) $(INCS) $(SRCS) $(LIBS) main.c -o $(NAME)
 
 clean:
 	rm -rf $(NAME)

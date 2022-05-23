@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/05/13 13:00:44 by yanab            ###   ########.fr       */
+/*   Updated: 2022/05/23 15:38:08 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int atoi_check(char *number)
+int	atoi_check(char *number)
 {
-	int i;
-	int sign;
-	long long num;
+	int			i;
+	int			sign;
+	long long	num;
 
 	i = 0;
 	sign = 1;
 	if (number[i] == '-' || number[i] == '+')
 	{
 		if (number[i++] == '-')
-			sign *= -1;
+			return (-1);
 		if (number[i] < '0' || number[i] > '9')
 			return (-1);
 	}
@@ -39,26 +39,27 @@ int atoi_check(char *number)
 	return (sign * num);
 }
 
-t_timestamp get_curr_time()
+t_timestamp	get_curr_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((t_timestamp)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
 
-void sleep_usec(t_timestamp usec)
+void	sleep_usec(t_timestamp usec)
 {
-	t_timestamp start_time;
+	t_timestamp	start_time;
 
 	start_time = get_curr_time();
+	usleep(usec * 8 / 10);
 	while (get_curr_time() - start_time < usec)
 		usleep(500);
 }
 
-void print_msg(int philo_id, int state, t_data data)
+void	print_msg(int philo_id, int state, t_data data)
 {
-	unsigned long timestamp;
+	unsigned long	timestamp;
 
 	timestamp = get_curr_time() - data.start_time;
 	pthread_mutex_lock(&data.write_mutex);
