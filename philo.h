@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/05/23 15:31:56 by yanab            ###   ########.fr       */
+/*   Updated: 2022/05/24 01:10:48 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	unsigned int	id;
 	int				n_times_eaten;
 	t_timestamp		last_time_eaten;
+	int				is_eating;
 	pthread_t		thread;
 	struct s_data	*data;
 }	t_philo;

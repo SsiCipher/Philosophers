@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/05/23 15:10:02 by yanab            ###   ########.fr       */
+/*   Updated: 2022/05/24 01:29:44 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	init_philos(t_data *data)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].n_times_eaten = 0;
-		data->philos[i].last_time_eaten = -1;
+		data->philos[i].last_time_eaten = data->start_time;
+		data->philos[i].is_eating = 0;
+		data->philos[i].data = data;
 		i++;
 	}
 	return (1);
