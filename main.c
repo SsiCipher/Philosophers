@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/05/24 15:21:49 by yanab            ###   ########.fr       */
+/*   Updated: 2022/05/24 15:39:09 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ int	monitor_death(t_data *data)
 			print_msg(data->philos[i].id, DIED, *data);
 			return (1);
 		}
+		usleep(1000);
+		i++;
+	}
+	return (0);
+}
+
+int	monitor_meals_count(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philos_count)
+	{
+		if (data->philos[i].n_times_eaten == data->n_times_to_eat)
+			return (1);
 		usleep(1000);
 		i++;
 	}
