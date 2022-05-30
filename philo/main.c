@@ -53,9 +53,10 @@ int	monitor_death(t_data *data)
 		)
 		{
 			print_msg(data->philos[i].id, DIED, *data);
+			data->philos[i].is_dead = 1;
 			return (1);
 		}
-		usleep(1000);
+		usleep(10);
 		i++;
 	}
 	return (0);
@@ -66,19 +67,20 @@ int	monitor_meals_count(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->philos_count)
-	{
-		if (data->philos[i].n_times_eaten == data->n_times_to_eat)
-			return (1);
-		usleep(1000);
+	while (
+		i < data->philos_count
+		&& data->philos[i].n_times_eaten <= data->n_times_to_eat
+	)
 		i++;
-	}
+	if (i == data->philos_count)
+		return (1);
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data		*data;
+	// pthread_t	eat_times_thread;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (argc < 5 || argc > 6)
@@ -86,6 +88,11 @@ int	main(int argc, char **argv)
 	if (!init_data(data, argc - 1, argv + 1))
 		return (print_error("Error:\nFailed to initialize data\n"));
 	start_philos(data);
+	// if (data->n_times_to_eat != -1)
+	// {
+	// 	pthread_create(&eat_times_thread, NULL, monitor_meals_count, NULL);
+	// 	pthread_detach(eat_times_thread);
+	// }
 	while (1)
 	{
 		if (monitor_death(data))

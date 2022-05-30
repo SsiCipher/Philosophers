@@ -25,6 +25,7 @@ void philo_eat(t_philo *philo, t_timestamp time_to_eat)
 	philo->last_time_eaten = get_curr_time() - philo->data->start_time;
 	philo->n_times_eaten += 1;
 	sleep_usec(time_to_eat);
+	philo->is_eating = 0;
 }
 
 void	pick_forks(t_philo *philo)
@@ -43,7 +44,6 @@ void	put_forks(t_philo *philo)
 
 	pthread_mutex_unlock(&forks[philo->id - 1 % philo->data->philos_count]);
 	pthread_mutex_unlock(&forks[philo->id % philo->data->philos_count]);
-	philo->is_eating = 0;
 }
 
 void	*philo_routine(void *params)
@@ -52,7 +52,7 @@ void	*philo_routine(void *params)
 
 	philo = (t_philo *)params;
 
-	while (true)
+	while (!(philo->is_dead))
 	{
 		pick_forks(philo);
 		philo_eat(philo, philo->data->time_to_eat);
