@@ -2,7 +2,7 @@ COMP	= cc
 NAME	= philo
 FLAGS	= -Wall -Wextra -Werror
 SRCS	= src/utils.c src/init_data.c src/routine.c
-INCS	= -I .
+INCS	= -I includes
 LIBS	= -lpthread
 
 all: $(NAME)
