@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/05/24 01:29:44 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/02 23:45:44 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	init_philos(t_data *data)
 int	check_error(t_data data, int check_last_arg)
 {
 	return (
-		data.philos_count == -1
-		|| data.time_to_die == -1
-		|| data.time_to_eat == -1
-		|| data.time_to_sleep == -1
+		data.philos_count <= 0
+		|| data.time_to_die <= 0
+		|| data.time_to_eat <= 0
+		|| data.time_to_sleep <= 0
 		|| (check_last_arg && data.n_times_to_eat == -1)
 	);
 }
