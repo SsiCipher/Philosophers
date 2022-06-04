@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/02 23:05:02 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/04 18:04:33 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ t_timestamp	get_curr_time(void)
 	return ((t_timestamp)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
 
+t_timestamp	meals_time_diff(t_data *data, int philo_index)
+{
+	t_timestamp	simulation_dur;
+
+	simulation_dur = get_curr_time() - data->start_time;
+	return (
+		simulation_dur - data->philos[philo_index].last_time_eaten
+	);
+}
+
 void	sleep_usec(t_timestamp usec)
 {
 	t_timestamp	start_time;
@@ -59,7 +69,7 @@ void	sleep_usec(t_timestamp usec)
 
 void	print_msg(int philo_id, int state, t_data data)
 {
-	unsigned long	timestamp;
+	t_timestamp	timestamp;
 
 	timestamp = get_curr_time() - data.start_time;
 	pthread_mutex_lock(&data.write_mutex);

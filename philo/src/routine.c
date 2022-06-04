@@ -6,19 +6,19 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/02 23:32:03 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/04 18:08:34 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void philo_sleep(t_philo *philo, t_timestamp time_to_sleep)
+void	philo_sleep(t_philo *philo, t_timestamp time_to_sleep)
 {
 	print_msg(philo->id, SLEEPING, *(philo->data));
 	sleep_usec(time_to_sleep);
 }
 
-void philo_eat(t_philo *philo, t_timestamp time_to_eat)
+void	philo_eat(t_philo *philo, t_timestamp time_to_eat)
 {
 	print_msg(philo->id, EATING, *(philo->data));
 	philo->is_eating = 1;
@@ -30,8 +30,9 @@ void philo_eat(t_philo *philo, t_timestamp time_to_eat)
 
 void	pick_forks(t_philo *philo)
 {
-	pthread_mutex_t *forks = philo->data->forks;
+	pthread_mutex_t	*forks;
 
+	forks = philo->data->forks;
 	pthread_mutex_lock(forks + ((philo->id - 1) % philo->data->philos_count));
 	print_msg(philo->id, TAKEN_FORK, *(philo->data));
 	pthread_mutex_lock(forks + (philo->id % philo->data->philos_count));
@@ -40,8 +41,9 @@ void	pick_forks(t_philo *philo)
 
 void	put_forks(t_philo *philo)
 {
-	pthread_mutex_t *forks = philo->data->forks;
+	pthread_mutex_t	*forks;
 
+	forks = philo->data->forks;
 	pthread_mutex_unlock(&forks[philo->id - 1 % philo->data->philos_count]);
 	pthread_mutex_unlock(&forks[philo->id % philo->data->philos_count]);
 }
@@ -51,7 +53,6 @@ void	*philo_routine(void *params)
 	t_philo	*philo;
 
 	philo = (t_philo *)params;
-
 	while (!(philo->is_dead))
 	{
 		pick_forks(philo);
@@ -60,6 +61,5 @@ void	*philo_routine(void *params)
 		philo_sleep(philo, philo->data->time_to_sleep);
 		print_msg(philo->id, THINKING, *(philo->data));
 	}
-
 	return (NULL);
 }
