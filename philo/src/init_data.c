@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/04 17:29:57 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/13 17:22:47 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	init_mutexes(t_data *data)
 	while (i < data->philos_count)
 		pthread_mutex_init(&data->forks[i++], NULL);
 	pthread_mutex_init(&data->write_mutex, NULL);
+	pthread_mutex_init(&data->death_mutex, NULL);
 	return (1);
 }
 

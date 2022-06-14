@@ -6,14 +6,14 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/04 18:11:02 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/13 17:23:18 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <stdio.h> // TEST ONLY
+# include <stdio.h>
 # include <string.h>
 # include <limits.h>
 # include <unistd.h>
@@ -53,6 +53,7 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	death_mutex;
 }	t_data;
 
 // --------> src/init_data.c <--------
