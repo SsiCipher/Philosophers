@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/26 05:42:46 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/26 05:48:39 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,66 +23,7 @@ int	print_error(char *error)
 
 void	start_philos(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->philos_count)
-	{
-		pthread_create(&(data->philos[i].thread), NULL,
-			philo_routine, &(data->philos[i]));
-		i += 2;
-	}
-	usleep(100);
-	i = 1;
-	while (i < data->philos_count)
-	{
-		pthread_create(&(data->philos[i].thread), NULL,
-			philo_routine, &(data->philos[i]));
-		i += 2;
-	}
-}
-
-int	monitor_death(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->philos_count)
-	{
-		if (
-			!data->philos[i].is_eating
-			&& meals_time_diff(data, i) > data->time_to_die
-		)
-		{
-			print_msg(data->philos[i].id, DIED, *data);
-			data->philos[i].is_dead = 1;
-			return (1);
-		}
-		usleep(10);
-		i++;
-	}
-	return (0);
-}
-
-int	monitor_meals_count(t_data *data)
-{
-	int	i;
-	int	philos_done_eating;
-
-	i = 0;
-	philos_done_eating = 0;
-	while (i < data->philos_count)
-	{
-		if (data->philos[i].n_times_eaten >= data->n_times_to_eat)
-			philos_done_eating++;
-		i++;
-	}
-	if (philos_done_eating == data->philos_count)
-	{
-		printf("All philosophers have eaten %d times\n", data->n_times_to_eat);
-		return (1);
-	}
-	return (0);
+	(void)data;
 }
 
 int	main(int argc, char **argv)
@@ -95,13 +36,5 @@ int	main(int argc, char **argv)
 	if (!init_data(data, argc - 1, argv + 1))
 		return (print_error("Error:\nFailed to initialize data\n"));
 	start_philos(data);
-	while (1)
-	{
-		if (
-			monitor_death(data)
-			|| (data->n_times_to_eat != -1 && monitor_meals_count(data))
-		)
-			return (1);
-	}
 	return (0);
 }

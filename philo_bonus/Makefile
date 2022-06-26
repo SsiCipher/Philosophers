@@ -1,5 +1,5 @@
 COMP	= cc
-NAME	= philo
+NAME	= philo_bonus
 FLAGS	= -Wall -Wextra -Werror
 SRCS	= src/init_data.c src/routine.c src/utils.c 
 INCS	= -I includes
