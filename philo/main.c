@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/26 05:39:09 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/26 05:42:14 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,10 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		return (print_error("Error:\nWrong arguments\n"));
-
 	data = (t_data *)malloc(sizeof(t_data));
-
 	if (!init_data(data, argc - 1, argv + 1))
 		return (print_error("Error:\nFailed to initialize data\n"));
-
 	start_philos(data);
-
 	while (1)
 	{
 		if (
@@ -107,6 +103,5 @@ int	main(int argc, char **argv)
 		)
 			return (1);
 	}
-
 	return (0);
 }

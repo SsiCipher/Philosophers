@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/26 05:31:18 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/26 05:42:07 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		*philo_routine(void *params);
 // --------> src/utils.c <--------
 int			atoi_check(char *number);
 t_timestamp	get_curr_time(void);
-t_timestamp	meals_time_diff(t_data *data, int philo_index);
+t_timestamp	meals_time_diff(t_data *data, int philo_i);
 void		sleep_usec(t_timestamp usec);
 void		print_msg(int philo_id, int state, t_data data);
 
