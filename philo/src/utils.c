@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/04 18:04:33 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/26 05:38:57 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ t_timestamp	get_curr_time(void)
 
 t_timestamp	meals_time_diff(t_data *data, int philo_index)
 {
+	t_timestamp	last_meal_time;
 	t_timestamp	simulation_dur;
 
+	last_meal_time = data->philos[philo_index].last_time_eaten - data->start_time;
 	simulation_dur = get_curr_time() - data->start_time;
-	return (
-		simulation_dur - data->philos[philo_index].last_time_eaten
-	);
+	return (last_meal_time + simulation_dur);
 }
 
 void	sleep_usec(t_timestamp usec)

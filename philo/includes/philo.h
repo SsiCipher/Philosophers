@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/13 17:23:18 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/26 05:31:18 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <stdbool.h>
 # include <string.h>
 # include <limits.h>
 # include <unistd.h>
@@ -39,6 +40,8 @@ typedef struct s_philo
 	int				is_eating;
 	int				is_dead;
 	pthread_t		thread;
+	bool			left_fork_picked;
+	bool			right_fork_picked;
 	struct s_data	*data;
 }	t_philo;
 

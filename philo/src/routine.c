@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/13 17:17:00 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/26 05:33:24 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ void	pick_forks(t_philo *philo)
 
 	forks = philo->data->forks;
 	pthread_mutex_lock(forks + ((philo->id - 1) % philo->data->philos_count));
+	philo->left_fork_picked = true;
 	print_msg(philo->id, TAKEN_FORK, *(philo->data));
 	pthread_mutex_lock(forks + (philo->id % philo->data->philos_count));
+	philo->right_fork_picked = true;
 	print_msg(philo->id, TAKEN_FORK, *(philo->data));
 }
 
@@ -56,10 +58,13 @@ void	*philo_routine(void *params)
 	while (!(philo->is_dead))
 	{
 		pick_forks(philo);
-		philo_eat(philo, philo->data->time_to_eat);
-		put_forks(philo);
-		philo_sleep(philo, philo->data->time_to_sleep);
-		print_msg(philo->id, THINKING, *(philo->data));
+		if (philo->left_fork_picked && philo->right_fork_picked)
+		{
+			philo_eat(philo, philo->data->time_to_eat);
+			put_forks(philo);
+			philo_sleep(philo, philo->data->time_to_sleep);
+			print_msg(philo->id, THINKING, *(philo->data));
+		}
 	}
 	return (NULL);
 }
