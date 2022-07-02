@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/26 05:41:53 by yanab            ###   ########.fr       */
+/*   Updated: 2022/07/02 10:27:12 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,27 @@ int	atoi_check(char *number)
 	return (sign * num);
 }
 
-t_timestamp	get_curr_time(void)
+time_t	get_curr_time(void)
 {
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return ((t_timestamp)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
+	return ((time_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
 
-t_timestamp	meals_time_diff(t_data *data, int philo_i)
+time_t	meals_time_diff(t_data *data, int philo_i)
 {
-	t_timestamp	last_meal_time;
-	t_timestamp	simulation_dur;
+	time_t	last_meal_time;
+	time_t	simulation_dur;
 
 	last_meal_time = data->philos[philo_i].last_time_eaten - data->start_time;
 	simulation_dur = get_curr_time() - data->start_time;
 	return (last_meal_time + simulation_dur);
 }
 
-void	sleep_usec(t_timestamp usec)
+void	sleep_usec(time_t usec)
 {
-	t_timestamp	start_time;
+	time_t	start_time;
 
 	start_time = get_curr_time();
 	usleep(usec * 8 / 10);
@@ -69,7 +69,7 @@ void	sleep_usec(t_timestamp usec)
 
 void	print_msg(int philo_id, int state, t_data data)
 {
-	t_timestamp	timestamp;
+	time_t	timestamp;
 
 	timestamp = get_curr_time() - data.start_time;
 	pthread_mutex_lock(&data.write_mutex);
