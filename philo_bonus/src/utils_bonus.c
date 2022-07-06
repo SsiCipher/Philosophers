@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/02 20:51:02 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/05 18:13:55 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	atoi_check(char *number)
 
 	i = 0;
 	sign = 1;
+	if (*number == '\0')
+		return (-1);
 	if (number[i] == '-' || number[i] == '+')
 	{
 		if (number[i++] == '-')
@@ -67,11 +69,11 @@ void	sleep_usec(time_t usec)
 		usleep(500);
 }
 
-void	print_msg(int philo_id, int state, t_data data)
+void	print_msg(int philo_id, int state, t_data data, time_t curr_time)
 {
 	time_t	timestamp;
 
-	timestamp = get_curr_time() - data.start_time;
+	timestamp = curr_time - data.start_time;
 	sem_wait(data.write_sem);
 	if (state == TAKEN_FORK)
 		printf("%ld %d has taken a fork\n", timestamp, philo_id);

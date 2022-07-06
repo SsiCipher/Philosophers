@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/02 21:40:16 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/05 18:19:36 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <stdbool.h>
@@ -39,8 +39,8 @@ typedef struct s_philo
 	unsigned int	id;
 	int				n_times_eaten;
 	time_t			last_time_eaten;
-	int				is_eating;
-	int				is_dead;
+	bool			is_eating;
+	bool			is_dead;
 	pid_t			pid;
 	bool			left_fork_picked;
 	bool			right_fork_picked;
@@ -74,7 +74,12 @@ int			atoi_check(char *number);
 time_t		get_curr_time(void);
 time_t		meals_time_diff(t_data *data, int philo_i);
 void		sleep_usec(time_t usec);
-void		print_msg(int philo_id, int state, t_data data);
+void		print_msg(int philo_id, int state, t_data data, time_t curr_time);
+
+// --------> src/monitor.c <--------
+
+bool		monitor_death(t_data *data);
+bool		monitor_meals_count(t_data *data);
 
 // --------> src/routine.c <--------
 
@@ -82,8 +87,6 @@ void		philo_sleep(t_philo *philo, time_t time_to_sleep);
 void		philo_eat(t_philo *philo, time_t time_to_eat);
 void		pick_forks(t_philo *philo);
 void		*routine(void *params);
-bool		monitor_death(t_data *data);
-bool		monitor_meals_count(t_data *data);
 void		philo_routine(t_philo *philo);
 
 // --------> main.c <--------

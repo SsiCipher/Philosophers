@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/02 10:27:12 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/06 16:29:41 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	atoi_check(char *number)
 
 	i = 0;
 	sign = 1;
+	if (*number == '\0')
+		return (-1);
 	if (number[i] == '-' || number[i] == '+')
 	{
 		if (number[i++] == '-')
@@ -67,12 +69,12 @@ void	sleep_usec(time_t usec)
 		usleep(500);
 }
 
-void	print_msg(int philo_id, int state, t_data data)
+void	print_msg(int philo_id, int state, t_data data, bool unlock_mutex)
 {
 	time_t	timestamp;
 
 	timestamp = get_curr_time() - data.start_time;
-	pthread_mutex_lock(&data.write_mutex);
+	pthread_mutex_lock(&(data.write_mutex));
 	if (state == TAKEN_FORK)
 		printf("%ld %d has taken a fork\n", timestamp, philo_id);
 	else if (state == EATING)
@@ -83,5 +85,9 @@ void	print_msg(int philo_id, int state, t_data data)
 		printf("%ld %d is thinking\n", timestamp, philo_id);
 	else if (state == DIED)
 		printf("%ld %d died\n", timestamp, philo_id);
-	pthread_mutex_unlock(&data.write_mutex);
+	else if (state == DONE)
+		printf("%ld philosophers ate %d times\n", timestamp,
+			data.n_times_to_eat);
+	if (unlock_mutex)
+		pthread_mutex_unlock(&(data.write_mutex));
 }

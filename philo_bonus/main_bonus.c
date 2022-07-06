@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/02 22:04:31 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/05 19:55:36 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	print_error(char *error)
 
 void	kill_all(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < data->philos_count)
@@ -35,15 +35,14 @@ void	start_philos(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->philos_count)
+	i = -1;
+	while (++i < data->philos_count)
 	{
 		data->philos[i].pid = fork();
 		if (data->philos[i].pid == -1)
 			kill_all(data);
 		else if (data->philos[i].pid == 0)
 			philo_routine(&(data->philos[i]));
-		i++;
 	}
 }
 
@@ -63,8 +62,5 @@ int	main(int argc, char **argv)
 		if (wstatus > 0)
 			kill_all(data);
 	}
-	// sem_close(data->forks);
-	// sem_close(data->death_sem);
-	// sem_close(data->write_sem);
 	return (0);
 }

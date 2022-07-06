@@ -2,7 +2,7 @@ COMP	= cc
 NAME	= philo_bonus
 FLAGS	= -Wall -Wextra -Werror
 INCS	= -I includes
-SRCS	= src/init_data_bonus.c src/routine_bonus.c src/utils_bonus.c 
+SRCS	= src/init_data_bonus.c src/routine_bonus.c src/monitor_bonus.c src/utils_bonus.c
 LIBS	= -l pthread
 
 all: $(NAME)

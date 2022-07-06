@@ -1,6 +1,6 @@
 # Stuff to do
 
-- [ ] FIX: atoi_check function
+- [x] FIX: atoi_check function
 - [ ] ADD: JSDoc to functions
 - [ ] FIX: death messages
 - [ ] FIX: message timestamp growing

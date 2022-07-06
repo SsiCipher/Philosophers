@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/02 21:59:31 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/05 18:11:00 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ bool	init_philos(t_data *data)
 		data->philos[i].pid = 0;
 		data->philos[i].n_times_eaten = 0;
 		data->philos[i].last_time_eaten = data->start_time;
-		data->philos[i].is_eating = 0;
-		data->philos[i].is_dead = 0;
+		data->philos[i].is_eating = false;
+		data->philos[i].is_dead = false;
 		data->philos[i].left_fork_picked = false;
 		data->philos[i].right_fork_picked = false;
 		data->philos[i].data = data;

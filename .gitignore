@@ -54,5 +54,3 @@ dkms.conf
 # Misc
 .vscode
 .DS_Store
-philo
-philo_bonus
