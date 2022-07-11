@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/06 17:17:34 by yanab            ###   ########.fr       */
+/*   Updated: 2022/07/11 02:02:57 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ bool	init_data(t_data *data, int argc, char **argv)
 		data->n_times_to_eat = atoi_check(argv[4]);
 	else
 		data->n_times_to_eat = -1;
-	data->start_time = get_curr_time();
 	if (check_error(*data, argc == 5))
 		return (false);
 	if (!init_philos(data))
