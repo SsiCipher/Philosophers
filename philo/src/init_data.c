@@ -6,13 +6,13 @@
 /*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/11 02:02:57 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/11 17:33:32 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	init_mutexes(t_data *data)
+bool	init_semaphores(t_data *data)
 {
 	int	i;
 
@@ -72,7 +72,7 @@ bool	init_data(t_data *data, int argc, char **argv)
 		return (false);
 	if (!init_philos(data))
 		return (false);
-	if (!init_mutexes(data))
+	if (!init_semaphores(data))
 		return (false);
 	return (true);
 }

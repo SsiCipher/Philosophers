@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/05 19:55:36 by yanab            ###   ########.fr       */
+/*   Updated: 2022/07/12 13:14:13 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,67 @@ void	kill_all(t_data *data)
 	exit(EXIT_FAILURE);
 }
 
-void	start_philos(t_data *data)
+bool	monitor_meals_count(t_data *data)
 {
 	int	i;
 
+	if (data->n_times_to_eat == -1)
+		return (false);
 	i = -1;
 	while (++i < data->philos_count)
 	{
-		data->philos[i].pid = fork();
-		if (data->philos[i].pid == -1)
-			kill_all(data);
-		else if (data->philos[i].pid == 0)
-			philo_routine(&(data->philos[i]));
+		if (data->philos[i].n_times_eaten < data->n_times_to_eat)
+			return (false);
 	}
+	print_msg(0, DONE, *data, false);
+	return (true);
 }
 
-int	main(int argc, char **argv)
+bool	monitor_death(t_data *data)
+{
+	int		i;
+	time_t	time_elapsed;
+
+	i = 0;
+	while (!monitor_meals_count(data))
+	{
+		if (data->philos[i].last_time_eaten == 0)
+			time_elapsed = get_curr_time() - data->start_time;
+		else
+			time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
+		if (
+			!data->philos[i].is_eating
+			&& time_elapsed >= data->time_to_die
+		)
+		{
+			print_msg(data->philos[i].id, DIED, *data, false);
+			data->philos[i].is_dead = 1;
+			return (true);
+		}
+		i++;
+		if (i >= data->philos_count)
+			i = 0;
+	}
+	return (false);
+}
+
+int	main(int argc, char *argv[])
 {
 	t_data	*data;
 	int		wstatus;
 
-	if (argc < 5 || argc > 6)
+	if (argc != 5 && argc != 6)
 		return (print_error("Error:\nWrong arguments\n"));
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!init_data(data, argc - 1, argv + 1))
 		return (print_error("Error:\nFailed to initialize data\n"));
-	start_philos(data);
+	data->start_time = get_curr_time();
+	start_philos(data, 0);
+	start_philos(data, 1);
 	while (waitpid(-1, &wstatus, 0) != -1)
 	{
 		if (wstatus > 0)
-			kill_all(data);
+			exit(0);
 	}
 	return (0);
 }

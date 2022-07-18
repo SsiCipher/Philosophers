@@ -6,7 +6,7 @@
 /*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/11 02:24:22 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/11 17:33:32 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_data
 
 // --------> src/init_data.c <--------
 
-bool		init_mutexes(t_data *data);
+bool		init_semaphores(t_data *data);
 bool		init_philos(t_data *data);
 bool		check_error(t_data data, int check_last_arg);
 bool		init_data(t_data *data, int argc, char **argv);

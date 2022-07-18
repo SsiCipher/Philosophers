@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/05 18:13:55 by yanab            ###   ########.fr       */
+/*   Updated: 2022/07/12 13:19:30 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,14 @@
 int	atoi_check(char *number)
 {
 	int			i;
-	int			sign;
 	long long	num;
 
 	i = 0;
-	sign = 1;
 	if (*number == '\0')
 		return (-1);
 	if (number[i] == '-' || number[i] == '+')
 	{
 		if (number[i++] == '-')
-			return (-1);
-		if (number[i] < '0' || number[i] > '9')
 			return (-1);
 	}
 	num = 0;
@@ -36,9 +32,9 @@ int	atoi_check(char *number)
 			return (-1);
 		num = num * 10 + (number[i++] - '0');
 	}
-	if (sign * num <= INT_MIN || sign * num >= INT_MAX)
+	if (num >= INT_MAX)
 		return (-1);
-	return (sign * num);
+	return (num);
 }
 
 time_t	get_curr_time(void)
@@ -47,16 +43,6 @@ time_t	get_curr_time(void)
 
 	gettimeofday(&tv, NULL);
 	return ((time_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
-}
-
-time_t	meals_time_diff(t_data *data, int philo_i)
-{
-	time_t	last_meal_time;
-	time_t	simulation_dur;
-
-	last_meal_time = data->philos[philo_i].last_time_eaten - data->start_time;
-	simulation_dur = get_curr_time() - data->start_time;
-	return (last_meal_time + simulation_dur);
 }
 
 void	sleep_usec(time_t usec)
@@ -69,11 +55,11 @@ void	sleep_usec(time_t usec)
 		usleep(500);
 }
 
-void	print_msg(int philo_id, int state, t_data data, time_t curr_time)
+void	print_msg(int philo_id, int state, t_data data, bool unlock_sem)
 {
 	time_t	timestamp;
 
-	timestamp = curr_time - data.start_time;
+	timestamp = get_curr_time() - data.start_time;
 	sem_wait(data.write_sem);
 	if (state == TAKEN_FORK)
 		printf("%ld %d has taken a fork\n", timestamp, philo_id);
@@ -85,5 +71,9 @@ void	print_msg(int philo_id, int state, t_data data, time_t curr_time)
 		printf("%ld %d is thinking\n", timestamp, philo_id);
 	else if (state == DIED)
 		printf("%ld %d died\n", timestamp, philo_id);
-	sem_post(data.write_sem);
+	else if (state == DONE)
+		printf("%ld philosophers ate %d times\n", timestamp,
+			data.n_times_to_eat);
+	if (unlock_sem)
+		sem_post(data.write_sem);
 }
