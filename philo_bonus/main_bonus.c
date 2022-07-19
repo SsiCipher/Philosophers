@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/12 13:14:13 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/19 03:34:35 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	kill_all(t_data *data)
 	exit(EXIT_FAILURE);
 }
 
+// UNUSED
 bool	monitor_meals_count(t_data *data)
 {
 	int	i;
@@ -47,6 +48,7 @@ bool	monitor_meals_count(t_data *data)
 	return (true);
 }
 
+// UNUSED
 bool	monitor_death(t_data *data)
 {
 	int		i;
@@ -78,7 +80,7 @@ bool	monitor_death(t_data *data)
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
-	int		wstatus;
+	int		status;
 
 	if (argc != 5 && argc != 6)
 		return (print_error("Error:\nWrong arguments\n"));
@@ -86,12 +88,11 @@ int	main(int argc, char *argv[])
 	if (!init_data(data, argc - 1, argv + 1))
 		return (print_error("Error:\nFailed to initialize data\n"));
 	data->start_time = get_curr_time();
-	start_philos(data, 0);
-	start_philos(data, 1);
-	while (waitpid(-1, &wstatus, 0) != -1)
+	start_philos(data);
+	while (waitpid(-1, &status, 0) != -1)
 	{
-		if (wstatus > 0)
-			exit(0);
+		if (status > 0)
+			exit(EXIT_SUCCESS);
 	}
 	return (0);
 }

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/12 13:04:35 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/19 02:05:42 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <stdbool.h>
@@ -71,7 +71,7 @@ bool		init_data(t_data *data, int argc, char **argv);
 void		philo_eat(t_philo *philo, time_t time_to_eat);
 void		pick_forks(t_philo *philo);
 void		*philo_routine(void *params);
-void		start_philos(t_data *data, int i);
+void		start_philos(t_data *data);
 
 // --------> src/utils.c <--------
 

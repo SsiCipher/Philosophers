@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/12 13:14:06 by cipher           ###   ########.fr       */
+/*   Updated: 2022/07/19 03:48:10 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,55 @@ void	*philo_routine(void *params)
 	return (NULL);
 }
 
-void	start_philos(t_data *data, int i)
+void	philo_main(t_data *data, int i)
 {
 	int			time_elapsed;
-	pid_t		child_pid;
 	pthread_t	child_thread;
 
+	if (pthread_create(&child_thread, NULL, philo_routine, &(data->philos[i])))
+		exit(EXIT_FAILURE);
+	while (true)
+	{
+		if (data->philos[i].last_time_eaten == 0)
+			time_elapsed = get_curr_time() - data->start_time;
+		else
+			time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
+		if (
+			!data->philos[i].is_eating
+			&& time_elapsed >= data->time_to_die
+		)
+		{
+			print_msg(data->philos[i].id, DIED, *data, false);
+			data->philos[i].is_dead = 1;
+			exit(EXIT_FAILURE);
+		}
+		usleep(100);
+	}
+}
+
+void	start_philos(t_data *data)
+{
+	int		i;
+	pid_t	child_pid;
+
+	i = 0;
 	while (i < data->philos_count)
 	{
 		child_pid = fork();
 		if (child_pid == -1)
 			exit(EXIT_FAILURE);
 		else if (child_pid == 0)
-		{
-			if (pthread_create(&child_thread, NULL, philo_routine, &(data->philos[i])))
-				exit(EXIT_FAILURE);
-			while (true)
-			{
-				if (data->philos[i].last_time_eaten == 0)
-					time_elapsed = get_curr_time() - data->start_time;
-				else
-					time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
-				if (
-					!data->philos[i].is_eating
-					&& time_elapsed >= data->time_to_die
-				)
-				{
-					print_msg(data->philos[i].id, DIED, *data, false);
-					data->philos[i].is_dead = 1;
-					exit(EXIT_FAILURE);
-				}
-				// usleep(100);
-			}
-		}
+			philo_main(data, i);
+		i += 2;
+	}
+	i = 1;
+	while (i < data->philos_count)
+	{
+		child_pid = fork();
+		if (child_pid == -1)
+			exit(EXIT_FAILURE);
+		else if (child_pid == 0)
+			philo_main(data, i);
 		i += 2;
 	}
 }
