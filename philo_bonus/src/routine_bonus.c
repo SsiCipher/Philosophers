@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/19 03:48:10 by yanab            ###   ########.fr       */
+/*   Updated: 2022/07/19 05:13:17 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	*philo_routine(void *params)
 	{
 		pick_forks(philo);
 		philo_eat(philo, philo->data->time_to_eat);
+		if (
+			philo->data->n_times_to_eat != -1
+			&& philo->n_times_eaten >= philo->data->n_times_to_eat
+		)
+			exit(EXIT_SUCCESS);
 		print_msg(philo->id, SLEEPING, *(philo->data), true);
 		sleep_usec(philo->data->time_to_sleep);
 		print_msg(philo->id, THINKING, *(philo->data), true);
@@ -60,7 +65,7 @@ void	philo_main(t_data *data, int i)
 	pthread_t	child_thread;
 
 	if (pthread_create(&child_thread, NULL, philo_routine, &(data->philos[i])))
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	while (true)
 	{
 		if (data->philos[i].last_time_eaten == 0)
@@ -76,7 +81,7 @@ void	philo_main(t_data *data, int i)
 			data->philos[i].is_dead = 1;
 			exit(EXIT_FAILURE);
 		}
-		usleep(100);
+		usleep(200);
 	}
 }
 
