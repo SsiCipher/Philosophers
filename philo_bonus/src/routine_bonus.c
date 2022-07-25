@@ -65,7 +65,7 @@ void	philo_main(t_data *data, int i)
 	pthread_t	child_thread;
 
 	if (pthread_create(&child_thread, NULL, philo_routine, &(data->philos[i])))
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 	while (true)
 	{
 		if (data->philos[i].last_time_eaten == 0)

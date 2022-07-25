@@ -12,6 +12,17 @@
 
 #include "philo.h"
 
+void	pick_forks(t_philo *philo)
+{
+	pthread_mutex_t	*forks;
+
+	forks = philo->data->forks;
+	pthread_mutex_lock(&forks[(philo->id - 1) % philo->data->philos_count]);
+	print_msg(philo->id, TAKEN_FORK, *(philo->data), true);
+	pthread_mutex_lock(&forks[philo->id % philo->data->philos_count]);
+	print_msg(philo->id, TAKEN_FORK, *(philo->data), true);
+}
+
 void	philo_eat(t_philo *philo, time_t time_to_eat)
 {
 	pthread_mutex_t	*forks;
@@ -23,19 +34,8 @@ void	philo_eat(t_philo *philo, time_t time_to_eat)
 	philo->n_times_eaten += 1;
 	sleep_usec(time_to_eat);
 	philo->is_eating = false;
-	pthread_mutex_unlock(&forks[philo->id - 1 % philo->data->philos_count]);
+	pthread_mutex_unlock(&forks[(philo->id - 1) % philo->data->philos_count]);
 	pthread_mutex_unlock(&forks[philo->id % philo->data->philos_count]);
-}
-
-void	pick_forks(t_philo *philo)
-{
-	pthread_mutex_t	*forks;
-
-	forks = philo->data->forks;
-	pthread_mutex_lock(forks + ((philo->id - 1) % philo->data->philos_count));
-	print_msg(philo->id, TAKEN_FORK, *(philo->data), true);
-	pthread_mutex_lock(forks + (philo->id % philo->data->philos_count));
-	print_msg(philo->id, TAKEN_FORK, *(philo->data), true);
 }
 
 void	*philo_routine(void *params)

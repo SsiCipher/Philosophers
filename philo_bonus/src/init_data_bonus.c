@@ -29,10 +29,10 @@ bool	init_philos(t_data *data)
 	int	i;
 
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philos_count);
-	if (!data->philos)
+	if (!(data->philos))
 		return (false);
-	i = 0;
-	while (i < data->philos_count)
+	i = -1;
+	while (++i < data->philos_count)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].pid = 0;
@@ -41,7 +41,6 @@ bool	init_philos(t_data *data)
 		data->philos[i].is_eating = false;
 		data->philos[i].is_dead = false;
 		data->philos[i].data = data;
-		i++;
 	}
 	return (true);
 }
@@ -53,7 +52,7 @@ bool	check_error(t_data data, int check_last_arg)
 		|| data.time_to_die <= 0
 		|| data.time_to_eat <= 0
 		|| data.time_to_sleep <= 0
-		|| (check_last_arg && data.n_times_to_eat == -1)
+		|| (check_last_arg && data.n_times_to_eat <= 0)
 	);
 }
 

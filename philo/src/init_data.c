@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-bool	init_semaphores(t_data *data)
+bool	init_mutexes(t_data *data)
 {
 	int	i;
 
@@ -33,8 +33,8 @@ bool	init_philos(t_data *data)
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philos_count);
 	if (!data->philos)
 		return (false);
-	i = 0;
-	while (i < data->philos_count)
+	i = -1;
+	while (++i < data->philos_count)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].n_times_eaten = 0;
@@ -42,7 +42,6 @@ bool	init_philos(t_data *data)
 		data->philos[i].is_eating = false;
 		data->philos[i].is_dead = false;
 		data->philos[i].data = data;
-		i++;
 	}
 	return (true);
 }
@@ -54,7 +53,7 @@ bool	check_error(t_data data, int check_last_arg)
 		|| data.time_to_die <= 0
 		|| data.time_to_eat <= 0
 		|| data.time_to_sleep <= 0
-		|| (check_last_arg && data.n_times_to_eat == -1)
+		|| (check_last_arg && data.n_times_to_eat <= 0)
 	);
 }
 
@@ -72,7 +71,7 @@ bool	init_data(t_data *data, int argc, char **argv)
 		return (false);
 	if (!init_philos(data))
 		return (false);
-	if (!init_semaphores(data))
+	if (!init_mutexes(data))
 		return (false);
 	return (true);
 }

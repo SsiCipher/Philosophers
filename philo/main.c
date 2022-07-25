@@ -54,7 +54,6 @@ bool	monitor_meals_count(t_data *data)
 		if (data->philos[i].n_times_eaten < data->n_times_to_eat)
 			return (false);
 	}
-	print_msg(0, DONE, *data, false);
 	return (true);
 }
 
@@ -91,10 +90,10 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 
 	if (argc != 5 && argc != 6)
-		return (print_error("Error:\nWrong arguments\n"));
+		return (print_error("Error: Wrong arguments\n"));
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!init_data(data, argc - 1, argv + 1))
-		return (print_error("Error:\nFailed to initialize data\n"));
+		return (print_error("Error: Failed to initialize data\n"));
 	data->start_time = get_curr_time();
 	start_philos(data);
 	return (monitor_death(data));

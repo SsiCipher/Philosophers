@@ -15,15 +15,14 @@
 
 # include <stdio.h>
 # include <stdbool.h>
-# include <string.h>
 # include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <pthread.h>
-# include <sys/time.h>
-# include <semaphore.h>
-# include <signal.h>
 # include <fcntl.h>
+# include <pthread.h>
+# include <signal.h>
+# include <semaphore.h>
+# include <sys/time.h>
 # include <sys/wait.h>
 
 # define TAKEN_FORK 0
@@ -31,7 +30,6 @@
 # define SLEEPING 2
 # define THINKING 3
 # define DIED 4
-# define DONE 5
 
 struct	s_data;
 
@@ -59,31 +57,31 @@ typedef struct s_data
 	sem_t		*write_sem;
 }	t_data;
 
-// --------> src/init_data.c <--------
+// --------> src/init_data_bonus.c <--------
 
-bool		init_semaphores(t_data *data);
-bool		init_philos(t_data *data);
-bool		check_error(t_data data, int check_last_arg);
-bool		init_data(t_data *data, int argc, char **argv);
+bool	init_semaphores(t_data *data);
+bool	init_philos(t_data *data);
+bool	check_error(t_data data, int check_last_arg);
+bool	init_data(t_data *data, int argc, char **argv);
 
-// --------> src/routine.c <--------
+// --------> src/routine_bonus.c <--------
 
-void		philo_eat(t_philo *philo, time_t time_to_eat);
-void		pick_forks(t_philo *philo);
-void		*philo_routine(void *params);
-void		start_philos(t_data *data);
+void	pick_forks(t_philo *philo);
+void	philo_eat(t_philo *philo, time_t time_to_eat);
+void	*philo_routine(void *params);
+void	philo_main(t_data *data, int i);
+void	start_philos(t_data *data);
 
-// --------> src/utils.c <--------
+// --------> src/utils_bonus.c <--------
 
-int			atoi_check(char *number);
-time_t		get_curr_time(void);
-void		sleep_usec(time_t usec);
-void		print_msg(int philo_id, int state, t_data data, bool unlock_mutex);
+int		atoi_check(char *number);
+time_t	get_curr_time(void);
+void	sleep_usec(time_t usec);
+void	print_msg(int philo_id, int state, t_data data, bool unlock_sem);
 
-// --------> main.c <--------
+// --------> main_bonus.c <--------
 
-bool		print_error(char *error);
-bool		monitor_death(t_data *data);
-bool		monitor_meals_count(t_data *data);
+bool	print_error(char *error);
+void	kill_all(t_data *data);
 
 #endif

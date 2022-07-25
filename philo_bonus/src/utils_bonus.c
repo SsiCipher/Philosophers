@@ -71,9 +71,6 @@ void	print_msg(int philo_id, int state, t_data data, bool unlock_sem)
 		printf("%ld %d is thinking\n", timestamp, philo_id);
 	else if (state == DIED)
 		printf("%ld %d died\n", timestamp, philo_id);
-	else if (state == DONE)
-		printf("%ld philosophers ate %d times\n", timestamp,
-			data.n_times_to_eat);
 	if (unlock_sem)
 		sem_post(data.write_sem);
 }

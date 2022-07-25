@@ -7,7 +7,7 @@ LIBS	= -lpthread
 
 all: $(NAME)
 
-$(NAME): $(SRCS) main.c
+$(NAME): $(SRCS) includes/philo.h main.c
 	$(COMP) $(FLAGS) $(INCS) $(SRCS) $(LIBS) main.c -o $(NAME)
 
 clean:

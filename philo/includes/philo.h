@@ -15,7 +15,6 @@
 
 # include <stdio.h>
 # include <stdbool.h>
-# include <string.h>
 # include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -27,7 +26,6 @@
 # define SLEEPING 2
 # define THINKING 3
 # define DIED 4
-# define DONE 5
 
 struct	s_data;
 
@@ -57,23 +55,21 @@ typedef struct s_data
 
 // --------> src/init_data.c <--------
 
-bool		init_semaphores(t_data *data);
+bool		init_mutexes(t_data *data);
 bool		init_philos(t_data *data);
 bool		check_error(t_data data, int check_last_arg);
 bool		init_data(t_data *data, int argc, char **argv);
 
 // --------> src/routine.c <--------
 
-void		philo_sleep(t_philo *philo, time_t time_to_sleep);
-void		philo_eat(t_philo *philo, time_t time_to_eat);
 void		pick_forks(t_philo *philo);
+void		philo_eat(t_philo *philo, time_t time_to_eat);
 void		*philo_routine(void *params);
 
 // --------> src/utils.c <--------
 
 int			atoi_check(char *number);
 time_t		get_curr_time(void);
-time_t		meals_time_diff(t_data *data, int philo_i);
 void		sleep_usec(time_t usec);
 void		print_msg(int philo_id, int state, t_data data, bool unlock_mutex);
 
