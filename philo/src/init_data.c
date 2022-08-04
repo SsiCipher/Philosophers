@@ -22,6 +22,7 @@ bool	init_mutexes(t_data *data)
 	i = -1;
 	while (++i < data->philos_count)
 		pthread_mutex_init(&data->forks[i], NULL);
+	pthread_mutex_init(&data->check_mutex, NULL);
 	pthread_mutex_init(&data->write_mutex, NULL);
 	return (true);
 }

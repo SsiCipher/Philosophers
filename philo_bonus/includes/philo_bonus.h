@@ -41,6 +41,7 @@ typedef struct s_philo
 	bool			is_eating;
 	int				n_times_eaten;
 	time_t			last_time_eaten;
+	sem_t			*check_sem;
 	struct s_data	*data;
 }	t_philo;
 

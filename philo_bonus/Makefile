@@ -1,6 +1,6 @@
 COMP	= cc
 NAME	= philo_bonus
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -fsanitize=thread -g3
 INCS	= -I includes
 SRCS	= src/init_data_bonus.c src/routine_bonus.c src/utils_bonus.c
 LIBS	= -lpthread

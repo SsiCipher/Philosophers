@@ -50,6 +50,7 @@ typedef struct s_data
 	time_t			start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	check_mutex;
 	pthread_mutex_t	write_mutex;
 }	t_data;
 

@@ -51,8 +51,13 @@ bool	monitor_meals_count(t_data *data)
 	i = -1;
 	while (++i < data->philos_count)
 	{
+		pthread_mutex_lock(&(data->check_mutex));
 		if (data->philos[i].n_times_eaten < data->n_times_to_eat)
+		{
+			pthread_mutex_unlock(&(data->check_mutex));
 			return (false);
+		}
+		pthread_mutex_unlock(&(data->check_mutex));
 	}
 	return (true);
 }
@@ -65,19 +70,26 @@ bool	monitor_death(t_data *data)
 	i = 0;
 	while (!monitor_meals_count(data))
 	{
+		pthread_mutex_lock(&(data->check_mutex));
 		if (data->philos[i].last_time_eaten == 0)
 			time_elapsed = get_curr_time() - data->start_time;
 		else
 			time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
+		pthread_mutex_unlock(&(data->check_mutex));
+		pthread_mutex_lock(&(data->check_mutex));
 		if (
 			!data->philos[i].is_eating
 			&& time_elapsed >= data->time_to_die
 		)
 		{
+			pthread_mutex_unlock(&data->check_mutex);
 			print_msg(data->philos[i].id, DIED, *data, false);
+			pthread_mutex_lock(&data->check_mutex);
 			data->philos[i].is_dead = 1;
+			pthread_mutex_unlock(&data->check_mutex);
 			return (true);
 		}
+		pthread_mutex_unlock(&(data->check_mutex));
 		i++;
 		if (i >= data->philos_count)
 			i = 0;

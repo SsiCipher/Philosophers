@@ -29,11 +29,19 @@ void	philo_eat(t_philo *philo, time_t time_to_eat)
 
 	forks = philo->data->forks;
 	print_msg(philo->id, EATING, *(philo->data), true);
+	sem_wait(philo->check_sem);
 	philo->is_eating = true;
+	sem_post(philo->check_sem);
+	sem_wait(philo->check_sem);
 	philo->last_time_eaten = get_curr_time();
+	sempostt(philo->check_sem);
+	sem_wait(philo->check_sem);
 	philo->n_times_eaten += 1;
+	sem_post(philo->check_sem);
 	sleep_usec(time_to_eat);
+	sem_wait(philo->check_sem);
 	philo->is_eating = false;
+	sem_post(philo->check_sem);
 	sem_post(forks);
 	sem_post(forks);
 }

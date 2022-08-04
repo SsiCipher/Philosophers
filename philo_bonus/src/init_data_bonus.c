@@ -40,6 +40,7 @@ bool	init_philos(t_data *data)
 		data->philos[i].last_time_eaten = 0;
 		data->philos[i].is_eating = false;
 		data->philos[i].is_dead = false;
+		data->philos[i].check_sem = sem_open("/check_sem", O_CREAT, 0666, 1);
 		data->philos[i].data = data;
 	}
 	return (true);
