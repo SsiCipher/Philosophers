@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/18 21:40:38 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/07 04:05:03 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,9 @@ bool	monitor_death(t_data *data)
 			&& time_elapsed >= data->time_to_die
 		)
 		{
-			pthread_mutex_unlock(&data->check_mutex);
-			print_msg(data->philos[i].id, DIED, *data, false);
-			pthread_mutex_lock(&data->check_mutex);
 			data->philos[i].is_dead = 1;
 			pthread_mutex_unlock(&data->check_mutex);
+			print_msg(data->philos[i].id, DIED, *data, false);
 			return (true);
 		}
 		pthread_mutex_unlock(&(data->check_mutex));

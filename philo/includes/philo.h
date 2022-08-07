@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/18 21:40:29 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/07 03:53:51 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_data
 	time_t			start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	check_mutex;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	check_mutex;
 }	t_data;
 
 // --------> src/init_data.c <--------

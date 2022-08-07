@@ -1,6 +1,6 @@
 COMP	= cc
 NAME	= philo
-FLAGS	= -Wall -Wextra -Werror #-fsanitize=thread -g3
+FLAGS	= -Wall -Wextra -Werror
 SRCS	= src/init_data.c src/routine.c src/utils.c
 INCS	= -I includes
 LIBS	= -lpthread

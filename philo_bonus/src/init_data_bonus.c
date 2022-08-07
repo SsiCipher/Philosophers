@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/19 04:38:49 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/07 07:11:19 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 bool	init_semaphores(t_data *data)
 {
-	sem_unlink("/forks_sem");
-	sem_unlink("/write_sem");
 	data->forks = sem_open("/forks_sem", O_CREAT, 0666, data->philos_count);
 	data->write_sem = sem_open("/write_sem", O_CREAT, 0666, 1);
+	data->check_sem = sem_open("/check_sem", O_CREAT, 0666, 1);
 	return (
 		data->forks != SEM_FAILED
 		&& data->write_sem != SEM_FAILED
+		&& data->check_sem != SEM_FAILED
 	);
 }
 
@@ -40,7 +40,6 @@ bool	init_philos(t_data *data)
 		data->philos[i].last_time_eaten = 0;
 		data->philos[i].is_eating = false;
 		data->philos[i].is_dead = false;
-		data->philos[i].check_sem = sem_open("/check_sem", O_CREAT, 0666, 1);
 		data->philos[i].data = data;
 	}
 	return (true);

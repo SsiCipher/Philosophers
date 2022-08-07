@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/19 05:14:52 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/07 04:29:48 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ void	philo_eat(t_philo *philo, time_t time_to_eat)
 
 	forks = philo->data->forks;
 	print_msg(philo->id, EATING, *(philo->data), true);
-	sem_wait(philo->check_sem);
+	
+	sem_wait(philo->data->check_sem);
 	philo->is_eating = true;
-	sem_post(philo->check_sem);
-	sem_wait(philo->check_sem);
 	philo->last_time_eaten = get_curr_time();
-	sempostt(philo->check_sem);
-	sem_wait(philo->check_sem);
 	philo->n_times_eaten += 1;
-	sem_post(philo->check_sem);
+	sem_post(philo->data->check_sem);
+	
 	sleep_usec(time_to_eat);
-	sem_wait(philo->check_sem);
+
+	sem_wait(philo->data->check_sem);
 	philo->is_eating = false;
-	sem_post(philo->check_sem);
+	sem_post(philo->data->check_sem);
+	
 	sem_post(forks);
 	sem_post(forks);
 }
@@ -49,9 +49,13 @@ void	philo_eat(t_philo *philo, time_t time_to_eat)
 void	*philo_routine(void *params)
 {
 	t_philo	*philo;
+	bool	is_dead;
 
 	philo = (t_philo *)params;
-	while (!(philo->is_dead))
+	sem_wait(philo->data->check_sem);
+	is_dead = philo->is_dead;
+	sem_post(philo->data->check_sem);
+	while (!is_dead)
 	{
 		pick_forks(philo);
 		philo_eat(philo, philo->data->time_to_eat);
@@ -71,22 +75,31 @@ void	philo_main(t_data *data, int i)
 {
 	int			time_elapsed;
 	pthread_t	child_thread;
+	time_t		last_eaten;
+	bool		is_eating;
 
 	if (pthread_create(&child_thread, NULL, philo_routine, &(data->philos[i])))
 		exit(EXIT_FAILURE);
 	while (true)
 	{
-		if (data->philos[i].last_time_eaten == 0)
+		sem_wait(data->check_sem);
+		last_eaten = data->philos[i].last_time_eaten;
+		sem_post(data->check_sem);
+		if (last_eaten == 0)
 			time_elapsed = get_curr_time() - data->start_time;
 		else
-			time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
+			time_elapsed = get_curr_time() - last_eaten;
+		sem_wait(data->check_sem);
+		is_eating = data->philos[i].is_eating;
+		sem_post(data->check_sem);
 		if (
-			!data->philos[i].is_eating
-			&& time_elapsed >= data->time_to_die
+			!is_eating && time_elapsed >= data->time_to_die
 		)
 		{
 			print_msg(data->philos[i].id, DIED, *data, false);
+			sem_wait(data->check_sem);
 			data->philos[i].is_dead = 1;
+			sem_post(data->check_sem);
 			exit(EXIT_FAILURE);
 		}
 		usleep(200);

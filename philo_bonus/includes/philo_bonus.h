@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/19 02:05:42 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/07 04:27:41 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_philo
 	bool			is_eating;
 	int				n_times_eaten;
 	time_t			last_time_eaten;
-	sem_t			*check_sem;
 	struct s_data	*data;
 }	t_philo;
 
@@ -55,6 +54,7 @@ typedef struct s_data
 	time_t		start_time;
 	t_philo		*philos;
 	sem_t		*forks;
+	sem_t		*check_sem;
 	sem_t		*write_sem;
 }	t_data;
 
