@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/08/07 01:28:36 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/09 04:32:39 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	*philo_routine(void *params)
 		print_msg(philo->id, SLEEPING, *(philo->data), true);
 		sleep_usec(philo->data->time_to_sleep);
 		print_msg(philo->id, THINKING, *(philo->data), true);
+		pthread_mutex_lock(&philo->data->check_mutex);
+		is_dead = philo->is_dead;
+		pthread_mutex_unlock(&philo->data->check_mutex);
 	}
 	return (NULL);
 }
