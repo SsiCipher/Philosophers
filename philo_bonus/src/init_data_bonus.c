@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:43:41 by yanab             #+#    #+#             */
-/*   Updated: 2022/08/07 07:11:19 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/11 02:26:51 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 bool	init_semaphores(t_data *data)
 {
+	sem_unlink("/forks_sem");
+	sem_unlink("/write_sem");
+	sem_unlink("/check_sem");
 	data->forks = sem_open("/forks_sem", O_CREAT, 0666, data->philos_count);
 	data->write_sem = sem_open("/write_sem", O_CREAT, 0666, 1);
 	data->check_sem = sem_open("/check_sem", O_CREAT, 0666, 1);

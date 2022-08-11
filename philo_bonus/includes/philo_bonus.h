@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/08/07 04:27:41 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/11 02:26:55 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_data
 	time_t		start_time;
 	t_philo		*philos;
 	sem_t		*forks;
-	sem_t		*check_sem;
 	sem_t		*write_sem;
+	sem_t		*check_sem;
 }	t_data;
 
 // --------> src/init_data_bonus.c <--------
