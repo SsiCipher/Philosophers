@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:46:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/08/11 02:32:22 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/15 03:30:24 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	philo_eat(t_philo *philo, time_t time_to_eat)
 
 	forks = philo->data->forks;
 	print_msg(philo->id, EATING, *(philo->data), true);
-
 	sem_wait(philo->data->check_sem);
 	philo->is_eating = true;
 	sem_post(philo->data->check_sem);
@@ -39,13 +38,10 @@ void	philo_eat(t_philo *philo, time_t time_to_eat)
 	sem_wait(philo->data->check_sem);
 	philo->n_times_eaten += 1;
 	sem_post(philo->data->check_sem);
-	
 	sleep_usec(time_to_eat);
-
 	sem_wait(philo->data->check_sem);
 	philo->is_eating = false;
 	sem_post(philo->data->check_sem);
-
 	sem_post(forks);
 	sem_post(forks);
 }
@@ -75,7 +71,6 @@ void	philo_main(t_data *data, int i)
 {
 	int			time_elapsed;
 	pthread_t	child_thread;
-	time_t		last_eaten;
 	bool		is_eating;
 
 	if (pthread_create(&child_thread, NULL, philo_routine, &(data->philos[i])))
@@ -83,12 +78,8 @@ void	philo_main(t_data *data, int i)
 	while (true)
 	{
 		sem_wait(data->check_sem);
-		last_eaten = data->philos[i].last_time_eaten;
+		time_elapsed = calc_time_elapsed(data, i);
 		sem_post(data->check_sem);
-		if (!last_eaten)
-			time_elapsed = get_curr_time() - data->start_time;
-		else
-			time_elapsed = get_curr_time() - last_eaten;
 		sem_wait(data->check_sem);
 		is_eating = data->philos[i].is_eating;
 		sem_post(data->check_sem);

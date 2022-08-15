@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:40:56 by yanab             #+#    #+#             */
-/*   Updated: 2022/08/11 02:26:55 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/15 03:29:50 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	start_philos(t_data *data);
 int		atoi_check(char *number);
 time_t	get_curr_time(void);
 void	sleep_usec(time_t usec);
+time_t	calc_time_elapsed(t_data *data, int i);
 void	print_msg(int philo_id, int state, t_data data, bool unlock_sem);
 
 // --------> main_bonus.c <--------

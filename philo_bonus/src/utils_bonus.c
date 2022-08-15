@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 06:29:48 by yanab             #+#    #+#             */
-/*   Updated: 2022/07/18 21:40:47 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/15 03:30:08 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ void	sleep_usec(time_t usec)
 	usleep(usec * 8 / 10);
 	while (get_curr_time() - start_time < usec)
 		usleep(500);
+}
+
+time_t	calc_time_elapsed(t_data *data, int i)
+{
+	time_t	time_elapsed;
+
+	if (data->philos[i].last_time_eaten == 0)
+		time_elapsed = get_curr_time() - data->start_time;
+	else
+		time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
+	return (time_elapsed);
 }
 
 void	print_msg(int philo_id, int state, t_data data, bool unlock_sem)

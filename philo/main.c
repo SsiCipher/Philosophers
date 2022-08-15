@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:10:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/08/09 05:53:00 by yanab            ###   ########.fr       */
+/*   Updated: 2022/08/15 03:24:49 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,7 @@ bool	monitor_death(t_data *data)
 	while (!monitor_meals_count(data))
 	{
 		pthread_mutex_lock(&(data->check_mutex));
-		if (data->philos[i].last_time_eaten == 0)
-			time_elapsed = get_curr_time() - data->start_time;
-		else
-			time_elapsed = get_curr_time() - data->philos[i].last_time_eaten;
+		time_elapsed = calc_time_elapsed(data, i);
 		pthread_mutex_unlock(&(data->check_mutex));
 		pthread_mutex_lock(&(data->check_mutex));
 		if (
@@ -83,7 +80,6 @@ bool	monitor_death(t_data *data)
 		)
 		{
 			data->philos[i].is_dead = 1;
-			pthread_mutex_unlock(&data->check_mutex);
 			print_msg(data->philos[i].id, DIED, *data, false);
 			return (true);
 		}
